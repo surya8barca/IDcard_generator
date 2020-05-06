@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class Dataform extends StatefulWidget {
   @override
@@ -6,9 +9,11 @@ class Dataform extends StatefulWidget {
 }
 
 class _DataformState extends State<Dataform> {
-  String nameCollege, nameStudent, dob, branch;
+  String nameCollege, nameStudent, dobValue, branch;
   int rollNo, finishYear;
-  Image picture;
+  File idPhoto;
+  String dob = "Date of Birth";
+  String imagestatus='Upload your picture';
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +31,6 @@ class _DataformState extends State<Dataform> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           padding: EdgeInsets.all(5),
           decoration: BoxDecoration(
@@ -185,7 +189,59 @@ class _DataformState extends State<Dataform> {
                     SizedBox(
                       height: 10,
                     ),
-                    //input calender for DOB
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                            border: Border.all(
+                              color: Colors.yellow,
+                              width: 2,
+                            ),
+                      ),
+                      child: Row(
+                        children: <Widget>[
+                          Text(
+                            dob,
+                            style: TextStyle(
+                              color: Colors.orange,
+                              fontSize: 30
+                            ),
+                          ),
+                          SizedBox(width: 60,),
+                          IconButton(
+                            onPressed: ()async{
+                              showDatePicker(
+                                context: context,
+                                initialDate: DateTime(2000),
+                                firstDate: DateTime(1990),
+                                lastDate: DateTime.now()
+                                ).then((date){
+                                  if(date!=null)
+                                  {
+                                    setState(() {
+                                      dob=date.toString().split(' ')[0];
+                                      dobValue=dob;
+                                    });
+                                  }
+                                });
+                            },
+                            icon: Icon(
+                              Icons.calendar_today,
+                              color: Colors.orange,
+                              size: 30,
+                          ),
+                          )
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 10,),
+                    Text(
+                      '*required',
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        color: Colors.red
+                      ),
+                      ),
                     SizedBox(
                       height: 10,
                     ),
@@ -274,9 +330,161 @@ class _DataformState extends State<Dataform> {
                       },
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
-                    //button for getting image
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                            border: Border.all(
+                              color: Colors.yellow,
+                              width: 2,
+                            ),
+                      ),
+                      child: Row(
+                        children: <Widget>[
+                          Text(
+                            imagestatus,
+                            style: TextStyle(
+                              color: Colors.orange,
+                              fontSize: 20
+                            ),
+                          ),
+                          SizedBox(width: 40,),
+                          IconButton(
+                            onPressed: (){
+                              if(idPhoto==null)
+                              {
+                                Alert(
+                                  context: context,
+                                  title: 'Select method',
+                                  buttons: [],
+                                  style: AlertStyle(
+                                    backgroundColor: Colors.black,
+                                    titleStyle: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  content: Container(
+                                    padding: EdgeInsets.all(25),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: <Widget>[
+                                        FlatButton(
+                                          padding: EdgeInsets.all(10),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(25)
+                                          ),
+                                          onPressed: (){
+                                            //via camera
+                                          },
+                                          color: Colors.blue,
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              Text(
+                                                'Camera',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color:Colors.black,
+                                                  fontSize: 25,
+                                                ),
+                                              ),
+                                              SizedBox(width: 20,),
+                                              Icon(
+                                                Icons.photo_camera,
+                                                color: Colors.black,
+                                                size: 30,
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(height: 15,),
+                                        FlatButton(
+                                          padding: EdgeInsets.all(10),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(25)
+                                          ),
+                                          onPressed: (){
+                                            //via gallery
+                                          },
+                                          color: Colors.blue,
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              Text(
+                                                'Gallery',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color:Colors.black,
+                                                  fontSize: 25,
+                                                ),
+                                              ),
+                                              SizedBox(width: 20,),
+                                              Icon(
+                                                Icons.camera,
+                                                color: Colors.black,
+                                                size: 30,
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ).show();
+                              }
+                              else
+                              {
+                                Alert(
+                                  context: context,
+                                  title: 'Your Image',
+                                  buttons: [],
+                                  style: AlertStyle(
+                                    backgroundColor: Colors.black,
+                                    titleStyle: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  content: Container(
+                                    padding: EdgeInsets.all(20),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(image: FileImage(idPhoto)),
+                                        border: Border.all(
+                                          color: Colors.black,
+                                          width: 2,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ).show();
+                              }
+                            },
+                            icon: Icon(
+                              Icons.photo_camera,
+                              color:Colors.orange,
+                              size:30,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 10,),
+                    Text(
+                      '*required',
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        color: Colors.red
+                      ),
+                      ),
+                    SizedBox(
+                      height: 10,
+                    ),
                   ],
                 ),
               ),
