@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 
 
@@ -100,19 +101,16 @@ class _DataformState extends State<Dataform> {
   }
 
   //firestore 
-  
-
-  Future<void> firestoreAdd() async{
-    final CollectionReference fire = Firestore.instance.collection('Database');
+    Future<void> firestoreAdd() async{
+    final CollectionReference database = Firestore.instance.collection('Database');
     try{
-       fire.document(rollNo.toString()).setData({
+       database.document(rollNo.toString()).setData({
          'college_name':nameCollege,
          'student_name':nameStudent,
          'roll_no':rollNo,
          'date_of_birth':dobValue,
          'branch':branch,
          'validity':finishYear,
-         'photo':idPhoto.toString()
       
     });
     }
@@ -149,7 +147,47 @@ class _DataformState extends State<Dataform> {
     
   }
   
+  //file uplaod
 
+  Future<void> fileUpload()async{
+    try{
+      final FirebaseStorage storage = FirebaseStorage(storageBucket: 'gs://idcardgenerator-80a4b.appspot.com');
+      final StorageReference uploader = storage.ref().child(rollNo.toString());
+      uploader.putFile(idPhoto);
+    print('uploaded');
+    }
+    catch(e)
+    {
+      Alert(
+          context: context,
+          title: 'Error',
+          desc: e.message,
+          buttons: [
+            DialogButton(
+              radius: BorderRadius.circular(25),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              color: Colors.blue,
+              child: Text(
+                'Okay',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 25,
+                ),
+              ),
+            ),
+          ],
+          style: AlertStyle(
+            backgroundColor: Colors.cyan,
+            titleStyle: TextStyle(fontWeight: FontWeight.bold),
+            descStyle: TextStyle(color: Colors.red),
+            buttonAreaPadding: EdgeInsets.all(15),
+          ),
+          ).show();
+    }    
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -713,6 +751,7 @@ class _DataformState extends State<Dataform> {
                               child: RaisedButton(
                                 onPressed: () async{
                                   await firestoreAdd();
+                                  await fileUpload();
                                   print('data added');
                                   //navigate to ID card page
                                 },
