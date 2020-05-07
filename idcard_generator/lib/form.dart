@@ -46,6 +46,52 @@ class _DataformState extends State<Dataform> {
   }
 
   //validation
+  validation() {
+    if (nameCollege == null ||
+        nameStudent == null ||
+        dobValue == null ||
+        rollNo == null ||
+        finishYear == null ||
+        branch == null ||
+        idPhoto == null ||
+        nameCollege == ' ' ||
+        nameStudent == ' ' ||
+        branch == ' ') {
+      Alert(
+          context: context,
+          title: 'Empty fields',
+          desc: 'All fields are required',
+          buttons: [
+            DialogButton(
+              radius: BorderRadius.circular(25),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              color: Colors.blue,
+              child: Text(
+                'Okay',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 25,
+                ),
+              ),
+            ),
+          ],
+          style: AlertStyle(
+            backgroundColor: Colors.cyan,
+            titleStyle: TextStyle(fontWeight: FontWeight.bold),
+            descStyle: TextStyle(color: Colors.red),
+            buttonAreaPadding: EdgeInsets.all(15),
+          ),
+          ).show();
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -568,8 +614,9 @@ class _DataformState extends State<Dataform> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20)),
                   onPressed: () {
-                    //check for validation
-                    Alert(
+                    if(validation())
+                    {
+                      Alert(
                       context: context,
                       style: AlertStyle(
                         backgroundColor: Colors.cyan,
@@ -625,6 +672,7 @@ class _DataformState extends State<Dataform> {
                         ),
                       ),
                     ).show();
+                    }
                   },
                   color: Colors.blue,
                   child: Text(
