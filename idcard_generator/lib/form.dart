@@ -3,6 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+
 
 class Dataform extends StatefulWidget {
   @override
@@ -56,7 +59,11 @@ class _DataformState extends State<Dataform> {
         idPhoto == null ||
         nameCollege == ' ' ||
         nameStudent == ' ' ||
-        branch == ' ') {
+        branch == ' ' ||
+        nameCollege == '' ||
+        nameStudent == '' ||
+        branch == ''
+        ) {
       Alert(
           context: context,
           title: 'Empty fields',
@@ -91,6 +98,57 @@ class _DataformState extends State<Dataform> {
       return true;
     }
   }
+
+  //firestore 
+  
+
+  Future<void> firestoreAdd() async{
+    final CollectionReference fire = Firestore.instance.collection('Database');
+    try{
+       fire.document(rollNo.toString()).setData({
+         'college_name':nameCollege,
+         'student_name':nameStudent,
+         'roll_no':rollNo,
+         'date_of_birth':dobValue,
+         'branch':branch,
+         'validity':finishYear,
+         'photo':idPhoto.toString()
+      
+    });
+    }
+    catch(e){
+      Alert(
+          context: context,
+          title: 'Error',
+          desc: e.message,
+          buttons: [
+            DialogButton(
+              radius: BorderRadius.circular(25),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              color: Colors.blue,
+              child: Text(
+                'Okay',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 25,
+                ),
+              ),
+            ),
+          ],
+          style: AlertStyle(
+            backgroundColor: Colors.cyan,
+            titleStyle: TextStyle(fontWeight: FontWeight.bold),
+            descStyle: TextStyle(color: Colors.red),
+            buttonAreaPadding: EdgeInsets.all(15),
+          ),
+          ).show();
+    }
+    
+  }
+  
 
 
   @override
@@ -653,8 +711,9 @@ class _DataformState extends State<Dataform> {
                                   borderRadius: BorderRadius.circular(20)),
                               buttonColor: Colors.black,
                               child: RaisedButton(
-                                onPressed: () {
-                                  //add data to firestore
+                                onPressed: () async{
+                                  await firestoreAdd();
+                                  print('data added');
                                   //navigate to ID card page
                                 },
                                 child: Text(

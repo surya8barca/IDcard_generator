@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "598954228142",
+    "firebase_url": "https://idcardgenerator-80a4b.firebaseio.com",
+    "project_id": "idcardgenerator-80a4b",
+    "storage_bucket": "idcardgenerator-80a4b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:598954228142:android:fd14053f237c75ca0df03f",
+        "android_client_info": {
+          "package_name": "com.example.idcard_generator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "598954228142-rqi27500sndq8cdjelrujbr2qcstc9h9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALY6xqDO7cG2nF4kSNOIXH5XkCFhyVt24"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "598954228142-rqi27500sndq8cdjelrujbr2qcstc9h9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
