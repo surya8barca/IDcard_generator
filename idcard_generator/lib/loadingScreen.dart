@@ -10,26 +10,25 @@ class _LoadingState extends State<Loading> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'Loading',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 35,
-                    color: Colors.red),
-              ),
-              SpinKitCircle(
-                color: Colors.red,
-                size: 150.0,
-              ),
-            ],
-          ),
+      backgroundColor: Colors.white,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'Loading',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold, fontSize: 35, color: Colors.blue),
+            ),
+            SizedBox(height: 15,),
+            SpinKitPouringHourglass(
+              color: Colors.blue,
+              size: 125,
+            ),
+          ],
         ),
-      );
+      ),
+    );
   }
 }

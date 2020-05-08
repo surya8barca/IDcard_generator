@@ -143,7 +143,6 @@ class _DataformState extends State<Dataform> {
 
   //file uplaod
 
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -706,11 +705,13 @@ class _DataformState extends State<Dataform> {
                                   onPressed: () async {
                                     await firestoreAdd();
                                     Navigator.pop(context);
-                                    Navigator.pushReplacement(
+                                    Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) =>
-                                                Showdata(rollno: rollNo,idPhoto: idPhoto,)));
+                                            builder: (context) => Showdata(
+                                                  rollno: rollNo,
+                                                  idPhoto: idPhoto,
+                                                )));
                                   },
                                   child: Text(
                                     'Yes',
