@@ -27,6 +27,7 @@ dependencies:
   image_picker:
   cloud_firestore:
   firebase_storage:
+  flutter_spinkit:
 
 dev_dependencies:
   flutter_test:

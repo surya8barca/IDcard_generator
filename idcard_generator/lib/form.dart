@@ -1,12 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:idcard_generator/display.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-
-
 
 class Dataform extends StatefulWidget {
   @override
@@ -63,130 +62,124 @@ class _DataformState extends State<Dataform> {
         branch == ' ' ||
         nameCollege == '' ||
         nameStudent == '' ||
-        branch == ''
-        ) {
+        branch == '') {
       Alert(
-          context: context,
-          title: 'Empty fields',
-          desc: 'All fields are required',
-          buttons: [
-            DialogButton(
-              radius: BorderRadius.circular(25),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              color: Colors.blue,
-              child: Text(
-                'Okay',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 25,
-                ),
+        context: context,
+        title: 'Empty fields',
+        desc: 'All fields are required',
+        buttons: [
+          DialogButton(
+            radius: BorderRadius.circular(25),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            color: Colors.blue,
+            child: Text(
+              'Okay',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 25,
               ),
             ),
-          ],
-          style: AlertStyle(
-            backgroundColor: Colors.cyan,
-            titleStyle: TextStyle(fontWeight: FontWeight.bold),
-            descStyle: TextStyle(color: Colors.red),
-            buttonAreaPadding: EdgeInsets.all(15),
           ),
-          ).show();
+        ],
+        style: AlertStyle(
+          backgroundColor: Colors.cyan,
+          titleStyle: TextStyle(fontWeight: FontWeight.bold),
+          descStyle: TextStyle(color: Colors.red),
+          buttonAreaPadding: EdgeInsets.all(15),
+        ),
+      ).show();
       return false;
-    }
-    else{
+    } else {
       return true;
     }
   }
 
-  //firestore 
-    Future<void> firestoreAdd() async{
-    final CollectionReference database = Firestore.instance.collection('Database');
-    try{
-       database.document(rollNo.toString()).setData({
-         'college_name':nameCollege,
-         'student_name':nameStudent,
-         'roll_no':rollNo,
-         'date_of_birth':dobValue,
-         'branch':branch,
-         'validity':finishYear,
-      
-    });
-    }
-    catch(e){
+  //firestore
+  Future<void> firestoreAdd() async {
+    final CollectionReference database =
+        Firestore.instance.collection('Database');
+    try {
+      database.document(rollNo.toString()).setData({
+        'college_name': nameCollege,
+        'student_name': nameStudent,
+        'roll_no': rollNo,
+        'date_of_birth': dobValue,
+        'branch': branch,
+        'validity': finishYear,
+      });
+    } catch (e) {
       Alert(
-          context: context,
-          title: 'Error',
-          desc: e.message,
-          buttons: [
-            DialogButton(
-              radius: BorderRadius.circular(25),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              color: Colors.blue,
-              child: Text(
-                'Okay',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 25,
-                ),
+        context: context,
+        title: 'Error',
+        desc: e.message,
+        buttons: [
+          DialogButton(
+            radius: BorderRadius.circular(25),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            color: Colors.blue,
+            child: Text(
+              'Okay',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 25,
               ),
             ),
-          ],
-          style: AlertStyle(
-            backgroundColor: Colors.cyan,
-            titleStyle: TextStyle(fontWeight: FontWeight.bold),
-            descStyle: TextStyle(color: Colors.red),
-            buttonAreaPadding: EdgeInsets.all(15),
           ),
-          ).show();
+        ],
+        style: AlertStyle(
+          backgroundColor: Colors.cyan,
+          titleStyle: TextStyle(fontWeight: FontWeight.bold),
+          descStyle: TextStyle(color: Colors.red),
+          buttonAreaPadding: EdgeInsets.all(15),
+        ),
+      ).show();
     }
-    
   }
-  
+
   //file uplaod
 
-  Future<void> fileUpload()async{
-    try{
-      final FirebaseStorage storage = FirebaseStorage(storageBucket: 'gs://idcardgenerator-80a4b.appspot.com');
+  Future<void> fileUpload() async {
+    try {
+      final FirebaseStorage storage = FirebaseStorage(
+          storageBucket: 'gs://idcardgenerator-80a4b.appspot.com');
       final StorageReference uploader = storage.ref().child(rollNo.toString());
       uploader.putFile(idPhoto);
-    print('uploaded');
-    }
-    catch(e)
-    {
+    } catch (e) {
       Alert(
-          context: context,
-          title: 'Error',
-          desc: e.message,
-          buttons: [
-            DialogButton(
-              radius: BorderRadius.circular(25),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              color: Colors.blue,
-              child: Text(
-                'Okay',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 25,
-                ),
+        context: context,
+        title: 'Error',
+        desc: e.message,
+        buttons: [
+          DialogButton(
+            radius: BorderRadius.circular(25),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            color: Colors.blue,
+            child: Text(
+              'Okay',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 25,
               ),
             ),
-          ],
-          style: AlertStyle(
-            backgroundColor: Colors.cyan,
-            titleStyle: TextStyle(fontWeight: FontWeight.bold),
-            descStyle: TextStyle(color: Colors.red),
-            buttonAreaPadding: EdgeInsets.all(15),
           ),
-          ).show();
-    }    
+        ],
+        style: AlertStyle(
+          backgroundColor: Colors.cyan,
+          titleStyle: TextStyle(fontWeight: FontWeight.bold),
+          descStyle: TextStyle(color: Colors.red),
+          buttonAreaPadding: EdgeInsets.all(15),
+        ),
+      ).show();
+    }
   }
 
   @override
@@ -710,66 +703,69 @@ class _DataformState extends State<Dataform> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20)),
                   onPressed: () {
-                    if(validation())
-                    {
+                    if (validation()) {
                       Alert(
-                      context: context,
-                      style: AlertStyle(
-                        backgroundColor: Colors.cyan,
-                      ),
-                      title: "Submit",
-                      desc: "Are you sure you want to submit?",
-                      buttons: [],
-                      content: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            ButtonTheme(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20)),
-                              buttonColor: Colors.black,
-                              child: RaisedButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text(
-                                  'No',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            ButtonTheme(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20)),
-                              buttonColor: Colors.black,
-                              child: RaisedButton(
-                                onPressed: () async{
-                                  await firestoreAdd();
-                                  await fileUpload();
-                                  print('data added');
-                                  //navigate to ID card page
-                                },
-                                child: Text(
-                                  'Yes',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
+                        context: context,
+                        style: AlertStyle(
+                          backgroundColor: Colors.cyan,
                         ),
-                      ),
-                    ).show();
+                        title: "Submit",
+                        desc: "Are you sure you want to submit?",
+                        buttons: [],
+                        content: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget>[
+                              ButtonTheme(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20)),
+                                buttonColor: Colors.black,
+                                child: RaisedButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text(
+                                    'No',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              ButtonTheme(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20)),
+                                buttonColor: Colors.black,
+                                child: RaisedButton(
+                                  onPressed: () async {
+                                    await firestoreAdd();
+                                    await fileUpload();
+                                    Navigator.pop(context);
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                Showdata(rollno: rollNo)));
+                                  },
+                                  child: Text(
+                                    'Yes',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ).show();
                     }
                   },
                   color: Colors.blue,
