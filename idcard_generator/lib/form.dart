@@ -5,7 +5,6 @@ import 'package:idcard_generator/display.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 
 class Dataform extends StatefulWidget {
   @override
@@ -144,44 +143,7 @@ class _DataformState extends State<Dataform> {
 
   //file uplaod
 
-  Future<void> fileUpload() async {
-    try {
-      final FirebaseStorage storage = FirebaseStorage(
-          storageBucket: 'gs://idcardgenerator-80a4b.appspot.com');
-      final StorageReference uploader = storage.ref().child(rollNo.toString());
-      uploader.putFile(idPhoto);
-    } catch (e) {
-      Alert(
-        context: context,
-        title: 'Error',
-        desc: e.message,
-        buttons: [
-          DialogButton(
-            radius: BorderRadius.circular(25),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            color: Colors.blue,
-            child: Text(
-              'Okay',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 25,
-              ),
-            ),
-          ),
-        ],
-        style: AlertStyle(
-          backgroundColor: Colors.cyan,
-          titleStyle: TextStyle(fontWeight: FontWeight.bold),
-          descStyle: TextStyle(color: Colors.red),
-          buttonAreaPadding: EdgeInsets.all(15),
-        ),
-      ).show();
-    }
-  }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -743,13 +705,12 @@ class _DataformState extends State<Dataform> {
                                 child: RaisedButton(
                                   onPressed: () async {
                                     await firestoreAdd();
-                                    await fileUpload();
                                     Navigator.pop(context);
                                     Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                Showdata(rollno: rollNo)));
+                                                Showdata(rollno: rollNo,idPhoto: idPhoto,)));
                                   },
                                   child: Text(
                                     'Yes',

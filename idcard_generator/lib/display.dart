@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:idcard_generator/loadingScreen.dart';
@@ -6,9 +8,9 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:async';
 
 class Showdata extends StatefulWidget {
-
+  final File idPhoto;
   final int rollno;
-  Showdata({this.rollno});
+  Showdata({this.rollno,this.idPhoto});
 
   @override
   _ShowdataState createState() => _ShowdataState();
@@ -17,25 +19,17 @@ class Showdata extends StatefulWidget {
 class _ShowdataState extends State<Showdata> {
   String nameCollege, nameStudent, dobValue, branch,idPhoto;
   int rollNo, finishYear;
+  File upload;
 
-
-
-  Future<void>getdatabase()async{
-    dynamic snapShot;
-    final CollectionReference fire = Firestore.instance.collection('Database');
-    try{
-      print('datbase entry');
-      snapShot = await fire.document(rollNo.toString()).get();
-    setState(() {
-      nameCollege=snapShot["college_name"];
-      nameStudent=snapShot["student_name"];
-      dobValue=snapShot["date_of_birth"];
-      branch=snapShot["branch"];
-      finishYear=snapShot["validity"];
-    });
-    }
-    catch(e){
-      print('database error');
+  Future<void> fileUpload() async {
+    try {
+      final FirebaseStorage storage = FirebaseStorage(
+          storageBucket: 'gs://idcardgenerator-80a4b.appspot.com');
+      final StorageReference uploader = storage.ref().child(rollNo.toString());
+      StorageUploadTask task = uploader.putFile(upload);
+      await task.onComplete;
+      print('uploaded');
+    } catch (e) {
       Alert(
         context: context,
         title: 'Error',
@@ -66,20 +60,65 @@ class _ShowdataState extends State<Showdata> {
       ).show();
     }
   }
+
+
+  Future<void>getdatabase()async{
+    await fileUpload();
+    dynamic snapShot;
+    final CollectionReference fire = Firestore.instance.collection('Database');
+    try{
+      snapShot = await fire.document(rollNo.toString()).get();
+    setState(() {
+      nameCollege=snapShot["college_name"];
+      nameStudent=snapShot["student_name"];
+      dobValue=snapShot["date_of_birth"];
+      branch=snapShot["branch"];
+      finishYear=snapShot["validity"];
+    });
+    }
+    catch(e){
+      Alert(
+        context: context,
+        title: 'Error',
+        desc: e.message,
+        buttons: [
+          DialogButton(
+            radius: BorderRadius.circular(25),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            color: Colors.blue,
+            child: Text(
+              'Okay',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 25,
+              ),
+            ),
+          ),
+        ],
+        style: AlertStyle(
+          backgroundColor: Colors.cyan,
+          titleStyle: TextStyle(fontWeight: FontWeight.bold),
+          descStyle: TextStyle(color: Colors.red),
+          buttonAreaPadding: EdgeInsets.all(15),
+        ),
+      ).show();
+    }
+    await getimage();
+  }
     Future<void> getimage()async{
     final FirebaseStorage storage = FirebaseStorage(
           storageBucket: 'gs://idcardgenerator-80a4b.appspot.com');
           final StorageReference downloader=storage.ref().child(rollNo.toString());
           try{
-            print("file entry");
             String url = await downloader.getDownloadURL();
-            print(url);
             setState(() {
               idPhoto=url;
             });
           }
    catch(e){
-     print('file error');
       Alert(
         context: context,
         title: 'Error',
@@ -113,17 +152,17 @@ class _ShowdataState extends State<Showdata> {
 
 
   @override
-  void initState() {
+  void initState(){
     setState(() {
       rollNo=widget.rollno;
+      upload=widget.idPhoto;
     });
-    getdatabase();
-    //getimage();
+    getdatabase(); 
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
-    if(nameCollege==null){
+    if(idPhoto==null){
       return Loading();
     }
     else{
@@ -159,8 +198,7 @@ class _ShowdataState extends State<Showdata> {
                   decoration: BoxDecoration(
                       border: Border.all(color: Colors.black, width: 1)
                 ),
-                child: //Image.network(idPhoto),
-                Text('Image')
+                child: Image.network(idPhoto),
                 ),
                 Text(nameCollege),
                 Text(nameStudent),
