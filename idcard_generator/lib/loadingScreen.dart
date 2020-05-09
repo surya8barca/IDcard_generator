@@ -19,9 +19,13 @@ class _LoadingState extends State<Loading> {
               'Loading',
               textAlign: TextAlign.center,
               style: TextStyle(
-                  fontWeight: FontWeight.bold, fontSize: 35, color: Colors.blue),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 35,
+                  color: Colors.blue),
             ),
-            SizedBox(height: 15,),
+            SizedBox(
+              height: 15,
+            ),
             SpinKitPouringHourglass(
               color: Colors.blue,
               size: 125,

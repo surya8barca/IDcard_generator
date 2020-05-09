@@ -1,10 +1,8 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:idcard_generator/display.dart';
+import 'package:idcard_generator/finalConfirmation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Dataform extends StatefulWidget {
   @override
@@ -95,53 +93,6 @@ class _DataformState extends State<Dataform> {
       return true;
     }
   }
-
-  //firestore
-  Future<void> firestoreAdd() async {
-    final CollectionReference database =
-        Firestore.instance.collection('Database');
-    try {
-      database.document(rollNo.toString()).setData({
-        'college_name': nameCollege,
-        'student_name': nameStudent,
-        'roll_no': rollNo,
-        'date_of_birth': dobValue,
-        'branch': branch,
-        'validity': finishYear,
-      });
-    } catch (e) {
-      Alert(
-        context: context,
-        title: 'Error',
-        desc: e.message,
-        buttons: [
-          DialogButton(
-            radius: BorderRadius.circular(25),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            color: Colors.blue,
-            child: Text(
-              'Okay',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 25,
-              ),
-            ),
-          ),
-        ],
-        style: AlertStyle(
-          backgroundColor: Colors.cyan,
-          titleStyle: TextStyle(fontWeight: FontWeight.bold),
-          descStyle: TextStyle(color: Colors.red),
-          buttonAreaPadding: EdgeInsets.all(15),
-        ),
-      ).show();
-    }
-  }
-
-  //file uplaod
 
   @override
   Widget build(BuildContext context) {
@@ -608,7 +559,8 @@ class _DataformState extends State<Dataform> {
                                               height: 15,
                                             ),
                                             Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
                                               children: <Widget>[
                                                 FlatButton(
                                                   padding: EdgeInsets.all(10),
@@ -619,100 +571,140 @@ class _DataformState extends State<Dataform> {
                                                   onPressed: () {
                                                     Navigator.pop(context);
                                                     Alert(
-                                    context: context,
-                                    title: 'Select method',
-                                    buttons: [],
-                                    style: AlertStyle(
-                                      backgroundColor: Colors.black,
-                                      titleStyle: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    content: Container(
-                                      padding: EdgeInsets.all(25),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: <Widget>[
-                                          FlatButton(
-                                            padding: EdgeInsets.all(10),
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(25)),
-                                            onPressed: () async {
-                                              await getcameraimage();
-                                              Navigator.pop(context);
-                                              Scaffold.of(context)
-                                                  .showSnackBar(snackbar);
-                                            },
-                                            color: Colors.blue,
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: <Widget>[
-                                                Text(
-                                                  'Camera',
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 25,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 20,
-                                                ),
-                                                Icon(
-                                                  Icons.photo_camera,
-                                                  color: Colors.black,
-                                                  size: 30,
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 15,
-                                          ),
-                                          FlatButton(
-                                            padding: EdgeInsets.all(10),
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(25)),
-                                            onPressed: () async {
-                                              await getgalleryimage();
-                                              Navigator.pop(context);
-                                              Scaffold.of(context)
-                                                  .showSnackBar(snackbar);
-                                            },
-                                            color: Colors.blue,
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: <Widget>[
-                                                Text(
-                                                  'Gallery',
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 25,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 20,
-                                                ),
-                                                Icon(
-                                                  Icons.camera,
-                                                  color: Colors.black,
-                                                  size: 30,
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ).show();
+                                                      context: context,
+                                                      title: 'Select method',
+                                                      buttons: [],
+                                                      style: AlertStyle(
+                                                        backgroundColor:
+                                                            Colors.black,
+                                                        titleStyle: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 25,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                      content: Container(
+                                                        padding:
+                                                            EdgeInsets.all(25),
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .start,
+                                                          children: <Widget>[
+                                                            FlatButton(
+                                                              padding:
+                                                                  EdgeInsets
+                                                                      .all(10),
+                                                              shape: RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              25)),
+                                                              onPressed:
+                                                                  () async {
+                                                                await getcameraimage();
+                                                                Navigator.pop(
+                                                                    context);
+                                                                Scaffold.of(
+                                                                        context)
+                                                                    .showSnackBar(
+                                                                        snackbar);
+                                                              },
+                                                              color:
+                                                                  Colors.blue,
+                                                              child: Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                children: <
+                                                                    Widget>[
+                                                                  Text(
+                                                                    'Camera',
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .center,
+                                                                    style:
+                                                                        TextStyle(
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontSize:
+                                                                          25,
+                                                                    ),
+                                                                  ),
+                                                                  SizedBox(
+                                                                    width: 20,
+                                                                  ),
+                                                                  Icon(
+                                                                    Icons
+                                                                        .photo_camera,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    size: 30,
+                                                                  )
+                                                                ],
+                                                              ),
+                                                            ),
+                                                            SizedBox(
+                                                              height: 15,
+                                                            ),
+                                                            FlatButton(
+                                                              padding:
+                                                                  EdgeInsets
+                                                                      .all(10),
+                                                              shape: RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              25)),
+                                                              onPressed:
+                                                                  () async {
+                                                                await getgalleryimage();
+                                                                Navigator.pop(
+                                                                    context);
+                                                                Scaffold.of(
+                                                                        context)
+                                                                    .showSnackBar(
+                                                                        snackbar);
+                                                              },
+                                                              color:
+                                                                  Colors.blue,
+                                                              child: Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                children: <
+                                                                    Widget>[
+                                                                  Text(
+                                                                    'Gallery',
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .center,
+                                                                    style:
+                                                                        TextStyle(
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontSize:
+                                                                          25,
+                                                                    ),
+                                                                  ),
+                                                                  SizedBox(
+                                                                    width: 20,
+                                                                  ),
+                                                                  Icon(
+                                                                    Icons
+                                                                        .camera,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    size: 30,
+                                                                  )
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ).show();
                                                   },
                                                   color: Colors.blue,
                                                   child: Text(
@@ -822,14 +814,18 @@ class _DataformState extends State<Dataform> {
                                     borderRadius: BorderRadius.circular(20)),
                                 buttonColor: Colors.black,
                                 child: RaisedButton(
-                                  onPressed: () async {
-                                    await firestoreAdd();
+                                  onPressed: () {
                                     Navigator.pop(context);
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => Showdata(
-                                                  rollno: rollNo,
+                                            builder: (context) => Confirmation(
+                                                  nameCollege: nameCollege,
+                                                  nameStudent: nameStudent,
+                                                  dobValue: dobValue,
+                                                  branch: branch,
+                                                  rollNo: rollNo,
+                                                  finishYear: finishYear,
                                                   idPhoto: idPhoto,
                                                 )));
                                   },
