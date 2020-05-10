@@ -77,34 +77,7 @@ class _IDcardState extends State<IDcard> {
         finishYear = snapShot["validity"];
       });
     } catch (e) {
-      Alert(
-        context: context,
-        title: 'Error',
-        desc: e.message,
-        buttons: [
-          DialogButton(
-            radius: BorderRadius.circular(25),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            color: Colors.blue,
-            child: Text(
-              'Okay',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 25,
-              ),
-            ),
-          ),
-        ],
-        style: AlertStyle(
-          backgroundColor: Colors.cyan,
-          titleStyle: TextStyle(fontWeight: FontWeight.bold),
-          descStyle: TextStyle(color: Colors.red),
-          buttonAreaPadding: EdgeInsets.all(15),
-        ),
-      ).show();
+      print(e.message);
     }
     await getimage();
   }
@@ -121,34 +94,7 @@ class _IDcardState extends State<IDcard> {
         idPhoto = url;
       });
     } catch (e) {
-      Alert(
-        context: context,
-        title: 'Error',
-        desc: e.message,
-        buttons: [
-          DialogButton(
-            radius: BorderRadius.circular(25),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            color: Colors.blue,
-            child: Text(
-              'Okay',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 25,
-              ),
-            ),
-          ),
-        ],
-        style: AlertStyle(
-          backgroundColor: Colors.cyan,
-          titleStyle: TextStyle(fontWeight: FontWeight.bold),
-          descStyle: TextStyle(color: Colors.red),
-          buttonAreaPadding: EdgeInsets.all(15),
-        ),
-      ).show();
+      print(e.message);
     }
   }
 
@@ -202,7 +148,7 @@ class _IDcardState extends State<IDcard> {
                   width: MediaQuery.of(context).size.width,
                   padding: EdgeInsets.all(6),
                   decoration: BoxDecoration(
-                    border:Border.all(
+                    border: Border.all(
                       color: Colors.red,
                       width: 5,
                     ),
@@ -218,24 +164,24 @@ class _IDcardState extends State<IDcard> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        Container(                        //college name bar
+                        Container(
+                          //college name bar
                           width: MediaQuery.of(context).size.width,
                           color: Colors.green,
                           child: Text(
                             nameCollege,
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold
-                            ),
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
                             Container(
-                              padding: EdgeInsets.fromLTRB(10,20, 10, 10),
+                              padding: EdgeInsets.fromLTRB(10, 20, 10, 10),
                               child: Column(
                                 children: <Widget>[
                                   Container(
@@ -247,127 +193,126 @@ class _IDcardState extends State<IDcard> {
                                         width: 2,
                                       ),
                                       image: DecorationImage(
-                                        image: NetworkImage(idPhoto),
-                                        fit: BoxFit.contain                                    ),
+                                          image: NetworkImage(idPhoto),
+                                          fit: BoxFit.contain),
                                     ),
                                   ),
                                 ],
                               ),
-                            ),                  
+                            ),
                             Container(
                               height: 120,
-                              width: 190,   
+                              width: 190,
                               child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget>[
-                                SizedBox(height: 20),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      'Name:',
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  SizedBox(height: 20),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        'Name:',
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
-                                    ),
-                                    Text(
-                                      nameStudent,
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        color: Colors.black,
+                                      Text(
+                                        nameStudent,
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 5),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      'Roll No:',
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold
+                                    ],
+                                  ),
+                                  SizedBox(height: 5),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        'Roll No:',
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold),
                                       ),
-                                    ),
-                                    Text(
-                                      rollNo.toString(),
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        color: Colors.black,
+                                      Text(
+                                        rollNo.toString(),
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 5),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      'Date of Birth:',
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold
+                                    ],
+                                  ),
+                                  SizedBox(height: 5),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        'Date of Birth:',
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold),
                                       ),
-                                    ),
-                                    Text(
-                                      dobValue,
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        color: Colors.black,
+                                      Text(
+                                        dobValue,
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 5),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      'Branch:',
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold
+                                    ],
+                                  ),
+                                  SizedBox(height: 5),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        'Branch:',
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold),
                                       ),
-                                    ),
-                                    Text(
-                                      branch,
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        color: Colors.black,
+                                      Text(
+                                        branch,
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
-                            ),                       
                           ],
                         ),
                         Text(
-                                    'Valid till $finishYear',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.red,
-                                      fontSize: 15,
-                                    ),
-                                  ),
-                          SizedBox(height: 2,),
-                        Container(                        //college name bar
+                          'Valid till $finishYear',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontSize: 15,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 2,
+                        ),
+                        Container(
+                          //college name bar
                           width: MediaQuery.of(context).size.width,
                           child: Text(
                             'IF FOUND, PLEASE RETURN',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold
-                            ),
+                                color: Colors.black,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                       ],
