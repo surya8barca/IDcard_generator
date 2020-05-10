@@ -183,12 +183,6 @@ class _IDcardState extends State<IDcard> {
           child: Container(
             width: MediaQuery.of(context).size.width,
             padding: EdgeInsets.all(10),
-            /*decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('images/back.jpg'),
-                fit: BoxFit.cover,
-              ),
-            ),*/
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
@@ -196,7 +190,7 @@ class _IDcardState extends State<IDcard> {
                   'ID Card',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.black,
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
                   ),
@@ -206,8 +200,7 @@ class _IDcardState extends State<IDcard> {
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
-                  padding: EdgeInsets.all(10),
-                  
+                  padding: EdgeInsets.all(6),
                   decoration: BoxDecoration(
                     border:Border.all(
                       color: Colors.red,
@@ -233,25 +226,21 @@ class _IDcardState extends State<IDcard> {
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Colors.black,
-                              fontSize: 30,
+                              fontSize: 20,
                               fontWeight: FontWeight.bold
                             ),
                           ),
                         ),
-                        Divider(
-                          color: Colors.black,
-                         thickness: 2,
-                        ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
                             Container(
-                              width: MediaQuery.of(context).size.width/2,
-                              padding: EdgeInsets.all(20),
+                              padding: EdgeInsets.fromLTRB(10,20, 10, 10),
                               child: Column(
                                 children: <Widget>[
                                   Container(
-                                    height: 100,
+                                    height: 120,
+                                    width: 100,
                                     decoration: BoxDecoration(
                                       border: Border.all(
                                         color: Colors.black,
@@ -259,18 +248,19 @@ class _IDcardState extends State<IDcard> {
                                       ),
                                       image: DecorationImage(
                                         image: NetworkImage(idPhoto),
-                                        fit: BoxFit.cover,                                    ),
+                                        fit: BoxFit.contain                                    ),
                                     ),
                                   ),
                                 ],
                               ),
                             ),                  
-                            Container(    
-                              width: MediaQuery.of(context).size.width/2,             // details of the student
-                            padding: EdgeInsets.all(20),
-                            child: Column(
+                            Container(
+                              height: 120,
+                              width: 190,   
+                              child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget>[
+                                SizedBox(height: 20),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: <Widget>[
@@ -279,7 +269,7 @@ class _IDcardState extends State<IDcard> {
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
                                         color: Colors.black,
-                                        fontWeight: FontWeight.bold
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                     Text(
@@ -291,6 +281,7 @@ class _IDcardState extends State<IDcard> {
                                     ),
                                   ],
                                 ),
+                                SizedBox(height: 5),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: <Widget>[
@@ -311,6 +302,7 @@ class _IDcardState extends State<IDcard> {
                                     ),
                                   ],
                                 ),
+                                SizedBox(height: 5),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: <Widget>[
@@ -331,6 +323,7 @@ class _IDcardState extends State<IDcard> {
                                     ),
                                   ],
                                 ),
+                                SizedBox(height: 5),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: <Widget>[
@@ -356,28 +349,23 @@ class _IDcardState extends State<IDcard> {
                             ),                       
                           ],
                         ),
-                        SizedBox(height: 15,),
                         Text(
                                     'Valid till $finishYear',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       color: Colors.red,
-                                      fontSize: 30,
+                                      fontSize: 15,
                                     ),
                                   ),
-                                  Divider(
-                          color: Colors.black,
-                         thickness: 2,
-                        ),
+                          SizedBox(height: 2,),
                         Container(                        //college name bar
                           width: MediaQuery.of(context).size.width,
-                          color: Colors.green,
                           child: Text(
                             'IF FOUND, PLEASE RETURN',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Colors.black,
-                              fontSize: 30,
+                              fontSize: 15,
                               fontWeight: FontWeight.bold
                             ),
                           ),
