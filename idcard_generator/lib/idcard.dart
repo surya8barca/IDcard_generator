@@ -255,7 +255,7 @@ class _IDcardState extends State<IDcard> {
                                         'Date of Birth:',
                                         textAlign: TextAlign.left,
                                         style: TextStyle(
-                                            color: Colors.black,
+                                            color: Colors.black,  
                                             fontWeight: FontWeight.bold),
                                       ),
                                       Text(
